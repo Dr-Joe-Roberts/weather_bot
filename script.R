@@ -15,6 +15,12 @@
 # Call MET_API_KEY from .Renviron file
 MET_API_KEY <- Sys.getenv("MET_API_KEY")
 
+# Call Twitter credentials from .Renviron file
+CONSUMER_KEY <- Sys.getenv("TWITTER_CONSUMER_KEY")
+CONSUMER_SECRET <- Sys.getenv("TWITTER_CONSUMER_SECRET")
+ACCESS_TOKEN <- Sys.getenv("TWITTER_ACCESS_TOKEN")
+ACCESS_TOKEN_SECRET <- Sys.getenv("TWITTER_ACCESS_TOKEN_SECRET")
+
 ## Weather data----
 # Define data download function
 METDataDownload <- function(stationID, product, MET_API_KEY) {
@@ -140,5 +146,3 @@ weather_data <- data[[3]] %>%
     weather_type = W,
     uv_index = U
   )
-
-
