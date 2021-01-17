@@ -16,6 +16,7 @@
 library(RJSONIO)
 library(dplyr)
 library(lubridate)
+library(emo)
 library(rtweet)
 
 # Edit .Renviron file to include API key
