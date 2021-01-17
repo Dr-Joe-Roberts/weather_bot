@@ -5,25 +5,25 @@
 
 ## Setup----
 # Edit .Renviron file to include API key
-user_renviron = path.expand(file.path("~", ".Renviron"))
-file.edit(user_renviron) # open with another text editor if this fails
+# user_renviron = path.expand(file.path("~", ".Renviron"))
+# file.edit(user_renviron) 
 
-# Call API_KEY from .Renviron file
-key <- Sys.getenv("API_KEY")
+# Call MET_API_KEY from .Renviron file
+MET_API_KEY <- Sys.getenv("MET_API_KEY")
 
 ## Download weather data----
 # Define function
-METDataDownload <- function(stationID, product, API_KEY){
+METDataDownload <- function(stationID, product, MET_API_KEY){
   library(RJSONIO) 
   library(dplyr)
   library(lubridate)
-  connectStr <- paste0("http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/", stationID, "?res=", product, "&key=", key)
+  connectStr <- paste0("http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/", stationID, "?res=", product, "&key=", MET_API_KEY)
   
   con <- url(connectStr)
   data.json <- fromJSON(paste(readLines(con), collapse=""))
   close(con)
   
-  #Station
+  # Station
   LocID <- data.json$SiteRep$DV$Location$`i`
   LocName <- data.json$SiteRep$DV$Location$name
   Country <- data.json$SiteRep$DV$Location$country
@@ -101,5 +101,6 @@ METDataDownload <- function(stationID, product, API_KEY){
 }
 
 # Call function
-METDataDownload(stationID = 352811, product = "daily", key)
+METDataDownload(stationID = 352811, product = "daily", MET_API_KEY)
+
 
