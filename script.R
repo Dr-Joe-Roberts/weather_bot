@@ -1,6 +1,6 @@
-## HEADER
-## Twitter weather bot
-## Last modified: 2021-01-16
+## HEADER----
+## Project: Twitter weather bot [R]
+## Last modified: 2021-01-17
 ## Last modified by: Joe Roberts
 
 ## Background----
@@ -134,9 +134,11 @@ weather_data <- data[[3]] %>%
     relative_humidity = Hn,
     precipitation_probability = PPd,
     wind_speed = S,
-    visiblity = V,
+    visibility = V,
     max_temp = Dm,
     feels_like_temp = FDm,
     weather_type = W,
     uv_index = U
   )
+
+
