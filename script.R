@@ -26,9 +26,10 @@ library(rtweet)
 # Call MET_API_KEY from .Renviron file
 MET_API_KEY <- Sys.getenv("MET_API_KEY")
 
+
 ## Weather data----
 # Define data download function
-METDataDownload <- function(stationID, product, MET_API_KEY) {
+.METDataDownload <- function(stationID, product, MET_API_KEY) {
   connectStr <- paste0("http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/", stationID, "?res=", product, "&key=", MET_API_KEY)
 
   con <- url(connectStr)
@@ -127,11 +128,12 @@ METDataDownload <- function(stationID, product, MET_API_KEY) {
 }
 
 # Download data
-raw_data <- METDataDownload(stationID = 352811, product = "daily", MET_API_KEY)
+raw_data <- .METDataDownload(stationID = 352811, product = "daily", MET_API_KEY)
+
 
 ## Twitter post----
 # Define tweet function
-tweetDailyWeather <- function() {
+.tweetDailyWeather <- function() {
   
   # Subset data for current day
   weather_data <- raw_data[[3]] %>%
@@ -181,6 +183,33 @@ tweetDailyWeather <- function() {
                                                 weather_type <- "thunder showers" } else if (weather_type == "30") {
                                                   weather_type <- "thunder" }
   
+  # Set weather emoji
+  weather_emoji <- weather_type
+  if (weather_emoji == "NA") {
+    weather_emoji == " " } else if (weather_emoji == "clear") {
+      weather_emoji <- emo::ji("sun") } else if (weather_emoji == "sunny") {
+        weather_emoji <- emo::ji("sun") } else if (weather_emoji == "partly cloudy") {
+          weather_emoji <- emo::ji("sun_behind_cloud") } else if (weather_emoji == "misty") {
+            weather_emoji <- emo::ji("fog") } else if (weather_emoji == "foggy") {
+              weather_emoji <- emo::ji("fog") } else if (weather_emoji == "cloudy") {
+                weather_emoji <- emo::ji("cloud") } else if (weather_emoji == "overcast") {
+                  weather_emoji <- emo::ji("cloud") } else if (weather_emoji == "light rain showers") {
+                    weather_emoji <- emo:ji("sun_behind_rain_cloud") } else if (weather_emoji == "drizzle") {
+                      weather_emoji <- emo::ji("cloud_with_rain") } else if (weather_emoji == "light rain") {
+                        weather_emoji <- emo::ji("cloud_with_rain") } else if (weather_emoji == "heavy rain showers") {
+                          weather_emoji <- emo::ji("cloud_with_rain") } else if (weather_emoji == "heavy rain") {
+                            weather_emoji <- emo::ji("cloud_with_rain") } else if (weather_emoji == "sleet showers") {
+                              weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "sleet") {
+                                weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "hail showers") {
+                                  weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "hail") {
+                                    weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "light snow showers") {
+                                      weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "light snow") {
+                                        weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "heavy snow showers") {
+                                          weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "heavy snow") {
+                                            weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "thunder showers") {
+                                              weather_emoji <- emo::ji("cloud_with_lightning_and_rain") } else if (weather_emoji == "thunder") {
+                                                weather_emoji <- emo::ji("high_voltage") }
+
   # Create rtweet token using credentials in .Renviron file
   token <- create_token(
     app = "HarperAdamsWeatherBot",
@@ -198,7 +227,8 @@ tweetDailyWeather <- function() {
                              weather_data$max_temp, 
                              " °C and a ",
                              weather_data$precipitation_probability,
-                             " % chance of precipitation.",
+                             " % chance of precipitation ",
+                             weather_emoji,
                              "\n",
                              "\n",
                              "Updated on ", 
@@ -207,4 +237,4 @@ tweetDailyWeather <- function() {
              token = token)
   }
 
-tweetDailyWeather()
+.tweetDailyWeather()
