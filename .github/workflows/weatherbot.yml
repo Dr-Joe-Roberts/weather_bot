@@ -1,13 +1,14 @@
-name: londonmapbot
+name: weatherbot
 
 on:
   schedule:
-    - cron: '42 0/2 * * *'  # once every two hours
+    - cron: '0 6 * * *'  # executes at 06:00 daily
 
 jobs:
-  londonmapbot-post:
+  weatherbot-post:
     runs-on: macOS-latest
     env:
+      MET_API_KEY: ${{ secrets.MET_API_KEY }}
       TWITTER_CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
       TWITTER_CONSUMER_API_SECRET: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
       TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
@@ -16,7 +17,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
+      - name: Install RJSONIO package
+        run: Rscript -e 'install.packages("RJSONIO", dependencies = TRUE)'
+      - name: Install dplyr package
+        run: Rscript -e 'install.packages("dplyr", dependencies = TRUE)'
+      - name: Install lubridate package
+        run: Rscript -e 'install.packages("lubridate", dependencies = TRUE)'
+      - name: Install emoji package
+        run: Rscript -e 'install.packages("emoji", dependencies = TRUE)'
       - name: Install rtweet package
         run: Rscript -e 'install.packages("rtweet", dependencies = TRUE)'
       - name: Create and post tweet
-        run: Rscript londonmapbot-tweet.R
+        run: Rscript script.R
