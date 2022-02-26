@@ -184,31 +184,31 @@ raw_data <- .METDataDownload(stationID = 352811, product = "daily", MET_API_KEY)
                                                   weather_type <- "thunder" }
   
   # Set weather emoji
-# weather_emoji <- weather_type
-#  if (weather_emoji == "NA") {
-#    weather_emoji == " " } else if (weather_emoji == "clear") {
-#      weather_emoji <- emo::ji("sun") } else if (weather_emoji == "sunny") {
-#        weather_emoji <- emo::ji("sun") } else if (weather_emoji == "partly cloudy") {
-#          weather_emoji <- emo::ji("sun_behind_cloud") } else if (weather_emoji == "misty") {
-#            weather_emoji <- emo::ji("fog") } else if (weather_emoji == "foggy") {
-#              weather_emoji <- emo::ji("fog") } else if (weather_emoji == "cloudy") {
-#                weather_emoji <- emo::ji("cloud") } else if (weather_emoji == "overcast") {
-#                  weather_emoji <- emo::ji("cloud") } else if (weather_emoji == "light rain showers") {
-#                    weather_emoji <- emo:ji("sun_behind_rain_cloud") } else if (weather_emoji == "drizzle") {
-#                      weather_emoji <- emo::ji("cloud_with_rain") } else if (weather_emoji == "light rain") {
-#                        weather_emoji <- emo::ji("cloud_with_rain") } else if (weather_emoji == "heavy rain showers") {
-#                          weather_emoji <- emo::ji("cloud_with_rain") } else if (weather_emoji == "heavy rain") {
-#                            weather_emoji <- emo::ji("cloud_with_rain") } else if (weather_emoji == "sleet showers") {
-#                              weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "sleet") {
-#                                weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "hail showers") {
-#                                  weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "hail") {
-#                                    weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "light snow showers") {
-#                                      weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "light snow") {
-#                                        weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "heavy snow showers") {
-#                                          weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "heavy snow") {
-#                                            weather_emoji <- emo::ji("cloud_with_snow") } else if (weather_emoji == "thunder showers") {
-#                                              weather_emoji <- emo::ji("cloud_with_lightning_and_rain") } else if (weather_emoji == "thunder") {
-#                                                weather_emoji <- emo::ji("high_voltage") }
+ weather_emoji <- weather_type
+  if (weather_emoji == "NA") {
+    weather_emoji == " " } else if (weather_emoji == "clear") {
+      weather_emoji <- emoji("sun") } else if (weather_emoji == "sunny") {
+        weather_emoji <- emoji("sun") } else if (weather_emoji == "partly cloudy") {
+          weather_emoji <- emoji("sun_behind_cloud") } else if (weather_emoji == "misty") {
+            weather_emoji <- emoji("fog") } else if (weather_emoji == "foggy") {
+              weather_emoji <- emoji("fog") } else if (weather_emoji == "cloudy") {
+                weather_emoji <- emoji("cloud") } else if (weather_emoji == "overcast") {
+                  weather_emoji <- emoji("cloud") } else if (weather_emoji == "light rain showers") {
+                    weather_emoji <- emoji("sun_behind_rain_cloud") } else if (weather_emoji == "drizzle") {
+                      weather_emoji <- emoji("cloud_with_rain") } else if (weather_emoji == "light rain") {
+                        weather_emoji <- emoji("cloud_with_rain") } else if (weather_emoji == "heavy rain showers") {
+                          weather_emoji <- emoji("cloud_with_rain") } else if (weather_emoji == "heavy rain") {
+                            weather_emoji <- emoji("cloud_with_rain") } else if (weather_emoji == "sleet showers") {
+                              weather_emoji <- emoji("cloud_with_snow") } else if (weather_emoji == "sleet") {
+                                weather_emoji <- emoji("cloud_with_snow") } else if (weather_emoji == "hail showers") {
+                                  weather_emoji <- emoji("cloud_with_snow") } else if (weather_emoji == "hail") {
+                                    weather_emoji <- emoji("cloud_with_snow") } else if (weather_emoji == "light snow showers") {
+                                      weather_emoji <- emoji("cloud_with_snow") } else if (weather_emoji == "light snow") {
+                                        weather_emoji <- emoji("cloud_with_snow") } else if (weather_emoji == "heavy snow showers") {
+                                          weather_emoji <- emoji("cloud_with_snow") } else if (weather_emoji == "heavy snow") {
+                                            weather_emoji <- emoji("cloud_with_snow") } else if (weather_emoji == "thunder showers") {
+                                              weather_emoji <- emoji("cloud_with_lightning_and_rain") } else if (weather_emoji == "thunder") {
+                                                weather_emoji <- emoji("high_voltage") }
 
   # Create rtweet token using credentials in .Renviron file
   token <- create_token(
@@ -228,7 +228,7 @@ raw_data <- .METDataDownload(stationID = 352811, product = "daily", MET_API_KEY)
                              " °C and a ",
                              weather_data$precipitation_probability,
                              " % chance of precipitation ",
-                             #weather_emoji,
+                             weather_emoji,
                              sep = ""), 
              token = token)
   }
