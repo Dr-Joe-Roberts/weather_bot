@@ -12,6 +12,7 @@
 # Load packages
 library(RJSONIO)
 library(dplyr)
+library(plyr)
 library(lubridate)
 library(emoji)
 library(rtweet)
