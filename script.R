@@ -11,8 +11,8 @@
 ## Setup----
 # Load packages
 library(RJSONIO)
-library(dplyr)
 library(plyr)
+library(dplyr)
 library(lubridate)
 library(emoji)
 library(rtweet)
