@@ -2,7 +2,7 @@ name: weatherbot
 
 on:
   schedule:
-    - cron: '40 14 * * *'  # executes at 06:00 daily
+    - cron: '0 6 * * *'  # executes at 06:00 daily
 
 jobs:
   weatherbot-post:
