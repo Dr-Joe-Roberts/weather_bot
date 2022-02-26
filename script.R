@@ -1,11 +1,8 @@
 ## HEADER----
 ## Project: Twitter weather bot [R]
-## Last modified: 22022-02-24
+## Last modified: 22022-02-26
 ## Last modified by: Joe Roberts
 
-## To-do
-# Add emojis
-# Run on a schedule using GitHub actions
 
 ## Background----
 # Met Office data function: https://www.r-bloggers.com/2019/02/weather-forecast-from-met-office/
