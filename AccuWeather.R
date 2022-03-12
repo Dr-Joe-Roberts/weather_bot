@@ -12,12 +12,12 @@
 
 ## Setup----
 # Load packages
-  library(RJSONIO)
-  library(plyr)
-  library(dplyr)
-  library(lubridate)
-  library(emoji)
-  library(rtweet)
+library(RJSONIO)
+library(plyr)
+library(dplyr)
+library(lubridate)
+library(emoji)
+library(rtweet)
 
 # Edit .Renviron file to include API key
 # user_renviron = path.expand(file.path("~", ".Renviron"))
