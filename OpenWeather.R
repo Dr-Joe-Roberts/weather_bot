@@ -163,12 +163,12 @@ daily_data <- .Daily_Data_Download(latitude = 52.776576, longitude = -2.426323, 
   )
   
   # Compose tweet
-  post_tweet(status = paste0("The weather forecast for today is ", 
+  post_tweet(status = paste0("The weather forecast for HAU today is ", 
                              weather_type, 
                              " with highs of ", 
                              weather_data$max_temp, 
                              " °C and a ",
-                             weather_data$precipitation_probability,
+                             weather_data$precipitation_prob,
                              " % chance of precipitation ",
                              weather_emoji,
                              sep = ""), 
