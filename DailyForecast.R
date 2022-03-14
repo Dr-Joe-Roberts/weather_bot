@@ -76,7 +76,7 @@ OW_API_KEY <- Sys.getenv("OW_API_KEY")
          weather_type = as.numeric(weather_type),
          temp_day = as.numeric(temp_day),
          temp_min = as.numeric(temp_min),
-         temp_max = as.numeric(temp_max),
+         temp_max = as.numeric(round(temp_max), digits = 0),
          temp_feel = as.numeric(temp_feel),
          pressure = as.numeric(pressure),
          humidity = as.numeric(humidity),
