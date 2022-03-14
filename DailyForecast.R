@@ -180,7 +180,7 @@ daily_data <- .Daily_Data_Download(latitude = 52.776576, longitude = -2.426323, 
   )
   
   # Compose tweet
-  post_tweet(status = paste0("The weather forecast for Edgmond today is ", 
+  post_tweet(status = paste0("The weather forecast for today is ", 
                              weather_type, 
                              " with highs of ",
                              weather_data$temp_max,
