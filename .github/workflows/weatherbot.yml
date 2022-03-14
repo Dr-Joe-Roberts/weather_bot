@@ -1,8 +1,8 @@
-name: weatherbot
+name: dailyforecast
 
 on:
   schedule:
-    - cron: '44 5 * * *'  # executes at 05:44 daily
+    - cron: '00 21 * * *'  # executes at 05:44 daily
 
 jobs:
   weatherbot-post:
@@ -18,8 +18,6 @@ jobs:
       - uses: r-lib/actions/setup-r@master
       - name: Install RJSONIO package
         run: Rscript -e 'install.packages("RJSONIO", dependencies = TRUE)'
-      - name: Install plyr package
-        run: Rscript -e 'install.packages("plyr", dependencies = TRUE)'
       - name: Install dplyr package
         run: Rscript -e 'install.packages("dplyr", dependencies = TRUE)'
       - name: Install lubridate package
@@ -29,4 +27,4 @@ jobs:
       - name: Install rtweet package
         run: Rscript -e 'install.packages("rtweet", dependencies = TRUE)'
       - name: Create and post tweet
-        run: Rscript script.R
+        run: Rscript DailyForecast.R
