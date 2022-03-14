@@ -2,7 +2,7 @@ name: dailyforecast
 
 on:
   schedule:
-    - cron: '00 21 * * *'  # executes at 05:44 daily
+    - cron: '05 21 * * *'  # executes at 05:44 daily
 
 jobs:
   weatherbot-post:
