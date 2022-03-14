@@ -28,14 +28,14 @@ OW_API_KEY <- Sys.getenv("OW_API_KEY")
 
 ## Weather data----
 # Define data download function - this will only pull current and daily data from OpenWeather
-.Daily_Data_Download <- function(latitude, longitude, OW_API_KEY) {
+.Current_Data_Download <- function(latitude, longitude, OW_API_KEY) {
   # Constructs API URL
   connectStr <- paste0("https://api.openweathermap.org/data/2.5/onecall?", 
                        "lat=", 
                        latitude, 
                        "&lon=", 
                        longitude, 
-                       "&units=metric&exclude=current,minutely,hourly,alerts&appid=", 
+                       "&units=metric&exclude=minutely,hourly,daily,alerts&appid=", 
                        OW_API_KEY)
   # Open URL connection
   con <- url(connectStr)
@@ -43,51 +43,39 @@ OW_API_KEY <- Sys.getenv("OW_API_KEY")
   data.json <- fromJSON(paste(readLines(con), collapse = ""))
   # Closes URL connection
   close(con)
-  # Subset data for current day
-  data <- data.json[["daily"]][[1]]
+  # Subset data 
+  data <- data.json[["current"]]
   
   dt <- data[["dt"]]
   weather_type <- data[["weather"]][[1]][["id"]]
-  temp_day <- data[["temp"]][["day"]]
-  temp_min <- data[["temp"]][["min"]]
-  temp_max <- data[["temp"]][["max"]]
-  temp_feel <- data[["feels_like"]][["day"]]
+  temp <- data[["temp"]] 
+  temp_feel <- data[["feels_like"]]
   pressure <- data[["pressure"]]
   humidity <- data[["humidity"]]
   wind_speed <- data[["wind_speed"]]
   wind_deg <- data[["wind_deg"]]
-  wind_gust <- data[["wind_gust"]]
-  precipitation_prob <- data[["pop"]] 
 
   weather_data <- data.frame(dt,
                              weather_type,
-                             temp_day,
-                             temp_min,
-                             temp_max,
+                             temp,
                              temp_feel,
                              pressure,
                              humidity,
                              wind_speed,
-                             wind_deg,
-                             wind_gust,
-                             precipitation_prob) %>%
+                             wind_deg) %>%
     
     mutate(dt = as_datetime(dt),
          weather_type = as.numeric(weather_type),
-         temp_day = as.numeric(temp_day),
-         temp_min = as.numeric(temp_min),
-         temp_max = as.numeric(temp_max),
+         temp = as.numeric(temp),
          temp_feel = as.numeric(temp_feel),
          pressure = as.numeric(pressure),
          humidity = as.numeric(humidity),
          wind_speed = as.numeric(round(wind_speed/0.4470), digits = 0), # Convert to mph
-         wind_deg = as.numeric(wind_deg),
-         wind_gust = as.numeric(round(wind_gust/0.4470), digits = 0), # Convert to mph
-         precipitation_prob = as.numeric(round(precipitation_prob*100), digits = 0)) # Convert to percentage
+         wind_deg = as.numeric(wind_deg)) # Convert to percentage
 }
 
 # Download data
-daily_data <- .Daily_Data_Download(latitude = 52.776576, longitude = -2.426323, OW_API_KEY)
+current_data <- .Current_Data_Download(latitude = 52.776576, longitude = -2.426323, OW_API_KEY)
 
 
 ## Twitter post----
@@ -95,7 +83,7 @@ daily_data <- .Daily_Data_Download(latitude = 52.776576, longitude = -2.426323, 
 .tweetDailyWeather <- function() {
   
   # Select data 
-  weather_data <- daily_data
+  weather_data <- current_data
   
   # Convert weather description into 'real world' values
   weather_type<- weather_data$weather_type
@@ -180,7 +168,7 @@ daily_data <- .Daily_Data_Download(latitude = 52.776576, longitude = -2.426323, 
   )
   
   # Compose tweet
-  post_tweet(status = paste0("The weather forecast for Edgmond today is ", 
+  post_tweet(status = paste0("The weather forecast for today is ",
                              weather_type, 
                              " with highs of ",
                              weather_data$temp_max,
