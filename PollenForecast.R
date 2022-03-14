@@ -13,7 +13,6 @@
 ## Setup----
 # Load packages
 library(RJSONIO)
-library(plyr)
 library(dplyr)
 library(lubridate)
 library(emoji)
