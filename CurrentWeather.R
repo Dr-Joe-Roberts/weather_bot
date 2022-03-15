@@ -54,6 +54,8 @@ OW_API_KEY <- Sys.getenv("OW_API_KEY")
   humidity <- data[["humidity"]]
   wind_speed <- data[["wind_speed"]]
   wind_deg <- data[["wind_deg"]]
+  uv <- data[["uvi"]]
+  visibility <- data[["visibility"]] 
 
   weather_data <- data.frame(dt,
                              weather_type,
@@ -62,7 +64,9 @@ OW_API_KEY <- Sys.getenv("OW_API_KEY")
                              pressure,
                              humidity,
                              wind_speed,
-                             wind_deg) %>%
+                             wind_deg,
+                             uv,
+                             visibility) %>%
     
     mutate(dt = as_datetime(dt),
          weather_type = as.numeric(weather_type),
@@ -71,7 +75,9 @@ OW_API_KEY <- Sys.getenv("OW_API_KEY")
          pressure = as.numeric(pressure),
          humidity = as.numeric(humidity),
          wind_speed = as.numeric(round(wind_speed/0.4470), digits = 0), # Convert to mph
-         wind_deg = as.numeric(wind_deg)) # Convert to percentage
+         wind_deg = as.numeric(wind_deg),
+         uv = as.numeric(uv),
+         visibility = as.numeric(round(visibility/1600), digits = 0)) # convert to miles 
 }
 
 # Download data
@@ -86,7 +92,7 @@ current_data <- .Current_Data_Download(latitude = 52.776576, longitude = -2.4263
   weather_data <- current_data
   
   # Convert weather description into 'real world' values
-  weather_type<- weather_data$weather_type
+  weather_type <- weather_data$weather_type
   
   if (weather_type == "NA") {
     weather_type <- "not available" } else if (weather_type == "200") {
@@ -148,7 +154,8 @@ current_data <- .Current_Data_Download(latitude = 52.776576, longitude = -2.4263
   wind_direction <- weather_data$wind_deg 
   
   if (wind_direction > 348.75 & wind_direction < 11.25) {
-    wind_direction == "north" } else if (wind_direction > 11.25 & wind_direction < 78.75) {
+    wind_direction == "north" } else if (wind_direction == 0) {
+      wind_direction <- "north" } else if (wind_direction > 11.25 & wind_direction < 78.75) {
       wind_direction <- "north east" } else if (wind_direction > 78.75 & wind_direction < 101.25) {
         wind_direction <- "east" } else if (wind_direction > 101.25 & wind_direction < 168.74) {
           wind_direction <- "south east" } else if (wind_direction > 168.75 & wind_direction < 191.25) {
@@ -168,15 +175,20 @@ current_data <- .Current_Data_Download(latitude = 52.776576, longitude = -2.4263
   )
   
   # Compose tweet
-  post_tweet(status = paste0("The weather forecast for today is ",
-                             weather_type, 
-                             " with highs of ",
-                             weather_data$temp_max,
-                             " °C and a ",
-                             weather_data$precipitation_prob,
-                             " % chance of precipitation ",
-                             weather_emoji,
-                             sep = ""), 
+  post_tweet(status = cat(paste0("The current weather conditions are: ",
+                                 "\n",
+                                 weather_type, " ", weather_emoji,
+                                 "\n",
+                                 "temperature: ", current_data$temp, " °C",
+                                 "\n",
+                                 "humidity: ", current_data$humidity, " %",
+                                 "\n",
+                                 "wind: ", current_data$wind_speed, " mph from the ", wind_direction,
+                                 "\n",
+                                 "uv index: ", current_data$uv,
+                                 "\n",
+                                 "visibility: ", current_data$visibility, " miles",
+                                 sep = "")), 
              token = token)
 }
 
