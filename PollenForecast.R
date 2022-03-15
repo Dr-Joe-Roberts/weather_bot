@@ -115,7 +115,7 @@ data <-.DataDownload(location = 2521389, ACCU_WEATHER_API_KEY)
   )
   
   # Compose tweet
-  post_tweet(status = glue("Pollen levels today are: 
+  post_tweet(status = glue("Pollen levels today 
                             trees: {tree_level} {tree_emoji}
                             grass: {grass_level} {grass_emoji}
                             weeds: {weed_level} {weed_emoji}"), 
