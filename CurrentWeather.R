@@ -17,6 +17,7 @@ library(dplyr)
 library(lubridate)
 library(emoji)
 library(rtweet)
+library(glue)
 
 # Edit .Renviron file to include API key
 # user_renviron = path.expand(file.path("~", ".Renviron"))
@@ -175,20 +176,13 @@ current_data <- .Current_Data_Download(latitude = 52.776576, longitude = -2.4263
   )
   
   # Compose tweet
-  post_tweet(status = cat(paste0("The current weather conditions are: ",
-                                 "\n",
-                                 weather_type, " ", weather_emoji,
-                                 "\n",
-                                 "temperature: ", current_data$temp, " °C",
-                                 "\n",
-                                 "humidity: ", current_data$humidity, " %",
-                                 "\n",
-                                 "wind: ", current_data$wind_speed, " mph from the ", wind_direction,
-                                 "\n",
-                                 "uv index: ", current_data$uv,
-                                 "\n",
-                                 "visibility: ", current_data$visibility, " miles",
-                                 sep = "")), 
+  post_tweet(status = glue("The current weather conditions are: 
+                           {weather_type} {weather_emoji}
+                           temperature: {current_data$temp} °C
+                           humidity: {current_data$humidity} %
+                           wind: {current_data$wind_speed} mph from the {wind_direction}
+                           uv index: {current_data$uv}
+                           visibility: {current_data$visibility} miles"),
              token = token)
 }
 
