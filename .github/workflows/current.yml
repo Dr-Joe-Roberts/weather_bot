@@ -26,5 +26,7 @@ jobs:
         run: Rscript -e 'install.packages("emoji", dependencies = TRUE)'
       - name: Install rtweet package
         run: Rscript -e 'install.packages("rtweet", dependencies = TRUE)'
+      - name: Install glue package
+        run: Rscript -e 'install.packages("glue", dependencies = TRUE)'
       - name: Create and post tweet
         run: Rscript CurrentWeather.R
