@@ -127,7 +127,7 @@ current_data <- .Current_Data_Download(latitude = 52.776576, longitude = -2.4263
                                                             weather_type <- "sandy" } else if (weather_type == "771") {
                                                                 weather_type <- "squalls" } else if (weather_type == "781") {
                                                                   weather_type <- "tornadoes" } else if (weather_type == "800") {
-                                                                    weather_type <- "sunny" } else if (weather_type == "801") {
+                                                                    weather_type <- "clear" } else if (weather_type == "801") {
                                                                       weather_type <- "clear with a few clouds" } else if (weather_type == "802") {
                                                                         weather_type <- "scattered clouds" } else if (weather_type == "803") {
                                                                           weather_type <- "broken clouds" } else if (weather_type == "804") {
@@ -146,7 +146,7 @@ current_data <- .Current_Data_Download(latitude = 52.776576, longitude = -2.4263
                 weather_emoji <- emoji("fog") } else if (weather_emoji == "smokey") {
                   weather_emoji <- emoji("smoke") } else if (weather_emoji == "squalls") {
                     weather_emoji <- emoji("wind") } else if (weather_emoji == "tornadoes") {
-                      weather_emoji <- emoji("tornado") } else if (weather_emoji == "sunny") {
+                      weather_emoji <- emoji("tornado") } else if (weather_emoji == "clear") {
                         weather_emoji <- emoji("sun") } else if (weather_emoji == "clear with a few clouds" | weather_emoji == "scattered clouds" | weather_emoji == "broken clouds") {
                           weather_emoji <- emoji("sun_behind_cloud") } else if (weather_emoji == "overcast") {
                             weather_emoji <- emoji("cloud") }
