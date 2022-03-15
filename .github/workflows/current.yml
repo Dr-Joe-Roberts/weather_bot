@@ -1,1 +1,30 @@
+name: current
 
+on:
+  schedule:
+    - cron: '0 0,4,8,12,16,20, * * *'  # executes at 05:45 daily
+
+jobs:
+  weatherbot-post:
+    runs-on: macOS-latest
+    env:
+      OW_API_KEY: ${{ secrets.OW_API_KEY }}
+      TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+      TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+      TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+      TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@master
+      - name: Install RJSONIO package
+        run: Rscript -e 'install.packages("RJSONIO", dependencies = TRUE)'
+      - name: Install dplyr package
+        run: Rscript -e 'install.packages("dplyr", dependencies = TRUE)'
+      - name: Install lubridate package
+        run: Rscript -e 'install.packages("lubridate", dependencies = TRUE)'
+      - name: Install emoji package
+        run: Rscript -e 'install.packages("emoji", dependencies = TRUE)'
+      - name: Install rtweet package
+        run: Rscript -e 'install.packages("rtweet", dependencies = TRUE)'
+      - name: Create and post tweet
+        run: Rscript CurrentWeather.R
