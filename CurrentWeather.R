@@ -1,6 +1,6 @@
 ## HEADER----
 ## Project: Twitter weather bot [R]
-## Last modified: 22022-03-14
+## Last modified: 22022-03-16
 ## Last modified by: Joe Roberts
 
 
@@ -187,7 +187,7 @@ current_data <- .Current_Data_Download(latitude = 52.776576, longitude = -2.4263
   )
   
   # Compose tweet
-  post_tweet(status = glue("The current weather conditions are: 
+  post_tweet(status = glue("Current weather conditions are: 
                            {weather_type} {weather_emoji}
                            temperature: {current_data$temp} °C
                            humidity: {current_data$humidity} %
