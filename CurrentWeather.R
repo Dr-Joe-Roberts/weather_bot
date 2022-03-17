@@ -134,6 +134,13 @@ current_data <- .Current_Data_Download(latitude = 52.776576, longitude = -2.4263
                                                                             weather_type <- "overcast" }
                   
   # Set weather emoji
+  hour <- hour(weather_data$dt) %>%
+    as.numeric()
+  
+  if (hour > 18 & hour < 6) {
+    hour <- "night" } else if (hour > 6 & hour < 18) {
+      hour <- "day" }
+  
   weather_emoji <- weather_type
   
   if (weather_emoji == "NA" | weather_emoji == "dusty" | weather_emoji == "sandy") {
@@ -146,10 +153,14 @@ current_data <- .Current_Data_Download(latitude = 52.776576, longitude = -2.4263
                 weather_emoji <- emoji("fog") } else if (weather_emoji == "smokey") {
                   weather_emoji <- emoji("smoke") } else if (weather_emoji == "squalls") {
                     weather_emoji <- emoji("wind") } else if (weather_emoji == "tornadoes") {
-                      weather_emoji <- emoji("tornado") } else if (weather_emoji == "clear") {
-                        weather_emoji <- emoji("sun") } else if (weather_emoji == "clear with a few clouds" | weather_emoji == "scattered clouds" | weather_emoji == "broken clouds") {
-                          weather_emoji <- emoji("sun_behind_cloud") } else if (weather_emoji == "overcast") {
-                            weather_emoji <- emoji("cloud") }
+                      weather_emoji <- emoji("tornado") } else if (weather_emoji == "clear" & hour == "day") {
+                        weather_emoji <- emoji("sun") } else if (weather_emoji == "clear" & hour == "night") {
+                          weather_emoji <- emoji("moon") } else if (weather_emoji == "clear with a few clouds" & hour == "day") {
+                            weather_emoji <- emoji("sun_behind_small_cloud") } else if (weather_emoji == "scattered clouds" & hour == "day") {
+                              weather_emoji <- emoji("sun_behind_large_cloud") } else if (weather_emoji == "broken clouds" & hour == "day") {
+                                weather_emoji <- emoji("sun_behind_cloud") } else if (weather_emoji == "clear with a few clouds" | weather_emoji == "scattered clouds" | weather_emoji == "broken clouds" & hour == "night") {
+                                  weather_emoji <- emoji("waxing_crescent_moon") } else if (weather_emoji == "overcast") {
+                                    weather_emoji <- emoji("cloud") }
   
   # Define wind direction
   wind_direction <- weather_data$wind_deg 
@@ -176,7 +187,7 @@ current_data <- .Current_Data_Download(latitude = 52.776576, longitude = -2.4263
   )
   
   # Compose tweet
-  post_tweet(status = glue("The current weather conditions are: 
+  post_tweet(status = glue("Current weather conditions are: 
                            {weather_type} {weather_emoji}
                            temperature: {current_data$temp} °C
                            humidity: {current_data$humidity} %
