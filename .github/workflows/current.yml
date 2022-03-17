@@ -29,4 +29,4 @@ jobs:
       - name: Install glue package
         run: Rscript -e 'install.packages("glue", dependencies = TRUE)'
       - name: Create and post tweet
-        run: Rscript CurrentWeather.R
+        run: Rscript Current.R
