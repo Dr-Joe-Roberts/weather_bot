@@ -137,8 +137,8 @@ current_data <- .Current_Data_Download(latitude = 52.776576, longitude = -2.4263
   hour <- hour(weather_data$dt) %>%
     as.numeric()
   
-  if (hour > 18 & hour < 6) {
-    hour <- "night" } else if (hour > 6 & hour < 18) {
+  if (hour > 18 | hour < 6) {
+    hour <- "night" } else if (hour > 6 | hour < 18) {
       hour <- "day" }
   
   weather_emoji <- weather_type
