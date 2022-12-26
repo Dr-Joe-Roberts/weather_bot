@@ -158,16 +158,17 @@ daily_data <- .Daily_Data_Download(latitude = 52.776576, longitude = -2.426323, 
   
   # Define wind direction
   wind_direction <- weather_data$wind_deg 
-  
-  if (wind_direction > 348.75 & wind_direction < 11.25) {
-    wind_direction == "north" } else if (wind_direction > 11.25 & wind_direction < 78.75) {
-      wind_direction <- "north east" } else if (wind_direction > 78.75 & wind_direction < 101.25) {
-        wind_direction <- "east" } else if (wind_direction > 101.25 & wind_direction < 168.74) {
-          wind_direction <- "south east" } else if (wind_direction > 168.75 & wind_direction < 191.25) {
-            wind_direction <- "south" } else if (wind_direction > 191.25 & wind_direction < 258.75) {
-              wind_direction <- "south west" } else if (wind_direction > 258.75 & wind_direction < 281.25) {
-                wind_direction <- "west" } else if (wind_direction > 281.25 & wind_direction < 348.75) {
-                  wind_direction <- "north west" }
+ 
+  if (wind_direction < 11.26) {
+    wind_direction <- "north" } else if (wind_direction > 11.25 & wind_direction < 78.76) {
+      wind_direction <- "north east" } else if (wind_direction > 78.75 & wind_direction < 101.26) {
+        wind_direction <- "east" } else if (wind_direction > 101.25 & wind_direction < 168.76) {
+          wind_direction <- "south east" } else if (wind_direction > 168.75 & wind_direction < 191.26) {
+            wind_direction <- "south" } else if (wind_direction > 191.25 & wind_direction < 258.76) {
+              wind_direction <- "south west" } else if (wind_direction > 258.75 & wind_direction < 281.26) {
+                wind_direction <- "west" } else if (wind_direction > 281.25 & wind_direction < 348.76) {
+                  wind_direction <- "north west" } else if (wind_direction > 348.75 & wind_direction < 360.26) {
+                    wind_direction <- "north" }
   
   # Create rtweet token using credentials in .Renviron file
   token <- create_token(
